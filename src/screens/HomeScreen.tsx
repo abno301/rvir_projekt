@@ -10,7 +10,6 @@ export default function HomeScreen() {
     const fetchData = async () => {
       try {
         const responseData = await filmApi('trending/all/day?language=en-US');
-        console.log('API Response:', responseData);
         setData(responseData);
       } catch (error) {
         console.error(error);
@@ -25,7 +24,6 @@ export default function HomeScreen() {
       {data ? (
         <FlatList
           data={data.results}
-         
           keyExtractor={(item, index) => index.toString()}
           numColumns={2} // Adjust the number of columns to match your design
           renderItem={({ item }) => (

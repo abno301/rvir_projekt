@@ -1,25 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import MovieCardDialog from './MovieCardDialog';
 
 export default function FilmCard({ film }: { film: any }) {
-
-  const [dialogVisible, setDialogVisible] = useState(false);
   // Function to handle the favorite icon press
   const handleFavoritePress = () => {
     // Implement your favorite functionality here
     console.log("Favorite icon pressed");
   };
-
-  const handleCardPress = () => {
-    setDialogVisible(true);
-  };
-
-  const closeDialog = () => {
-    setDialogVisible(false);
-  };
-
 
   function getVoteColor(vote:any) {
     if (vote < 5) {
@@ -32,15 +20,14 @@ export default function FilmCard({ film }: { film: any }) {
   }
 
   return (
-    <>
     <View style={styles.cardContainer}>
-      <TouchableOpacity onPress={handleCardPress}>
+      <TouchableOpacity onPress={handleFavoritePress}>
         <View style={styles.imageContainer}>
           <Image
             source={{ uri: `https://image.tmdb.org/t/p/w500/${film.poster_path}` }}
             style={styles.image}
           />
-          {/*<MaterialIcons name="favorite-border" size={24} color="white" style={styles.favoriteIcon} onClick={handleCardPress()}/> */}
+          <MaterialIcons name="favorite-border" size={24} color="white" style={styles.favoriteIcon} />
         </View>
       </TouchableOpacity>
       <View style={styles.contentContainer}>
@@ -61,14 +48,6 @@ export default function FilmCard({ film }: { film: any }) {
         </View>
       </View>
     </View>
-
-    <MovieCardDialog
-        visible={dialogVisible}
-        onClose={closeDialog}
-        film={film}
-      />
-
-    </>
   );
 }
 

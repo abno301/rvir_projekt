@@ -11,19 +11,19 @@ function WelcomeScreen({ navigation }: {navigation: any}) {
           <View>
          
           </View>
-          <Text style={{ color: '#990008', fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginHorizontal: 24 }}>
-            Movie App nekaj nekaj
+          <Text style={{ color: '#0000FF', fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginHorizontal: 24 }}>
+            Keep all your client conversations in one place
           </Text>
           <Text style={{ color: '#FFFFFF', fontSize: 16, textAlign: 'center', marginHorizontal: 16 }}>
-          nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj
+            At legal call we allow you to contact your clients through voice and text without giving out your phone number
           </Text>
           <View>
-            <Pressable style={{ backgroundColor: '#990008', paddingVertical: 8, paddingHorizontal: 16, margin: 16 }}>
+            <Pressable style={{ backgroundColor: '#0000FF', paddingVertical: 8, paddingHorizontal: 16, margin: 16 }}>
               <Text style={{ textAlign: 'center', color: '#FFFFFF', fontWeight: 'bold', fontSize: 16 }} onPress={() => navigation.navigate('Log In')}>
                 Sign In
               </Text>
             </Pressable>
-            <Pressable style={{ backgroundColor: '#990008', paddingVertical: 8, paddingHorizontal: 16, margin: 16 }}>
+            <Pressable style={{ backgroundColor: '#0000FF', paddingVertical: 8, paddingHorizontal: 16, margin: 16 }}>
               <Text style={{ textAlign: 'center', color: '#FFFFFF', fontWeight: 'bold', fontSize: 16 }} onPress={() => navigation.navigate('Sign Up')}>
                 Sign Up
               </Text>
