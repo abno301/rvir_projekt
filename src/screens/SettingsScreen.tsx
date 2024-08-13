@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
 
 export default function Settings() {
@@ -15,13 +15,15 @@ export default function Settings() {
             {user.email}
           </Text>
           <Text style={styles.label}>
-            <Text style={styles.labelBold}>Display Name: </Text>
-            {user.displayName || 'N/A'}
+          
+         
           </Text>
-          <Button title="Logout" onPress={logout} />
+          <TouchableOpacity style={styles.button} onPress={logout}>
+            <Text style={styles.buttonText}>Logout</Text>
+          </TouchableOpacity>
         </View>
       ) : (
-        <Text>No user is logged in.</Text>
+        <Text style={styles.noUserText}>No user is logged in.</Text>
       )}
     </View>
   );
@@ -33,10 +35,12 @@ const styles = StyleSheet.create({
     padding: 16,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#0e1529',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
+    color: '#FFFFFF',
     marginBottom: 20,
   },
   userInfo: {
@@ -44,10 +48,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    fontSize: 16,
+    fontSize: 18,
+    color: '#FFFFFF',
     marginVertical: 5,
   },
   labelBold: {
     fontWeight: 'bold',
+  },
+  button: {
+    backgroundColor: '#990008',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginTop: 20,
+    borderRadius: 0, // Rectangular button
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  noUserText: {
+    fontSize: 16,
+    color: '#FFFFFF',
   },
 });
