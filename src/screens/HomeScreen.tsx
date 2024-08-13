@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import FilmCard from '../components/MovieCard' // Assuming you have a FilmCard component similar to FilmKartica
+import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
+import FilmCard from '../components/MovieCard'; // Assuming you have a FilmCard component similar to FilmKartica
 import { filmApi } from '../hooks/useApiCall';
 
 export default function HomeScreen() {
   const [data, setData] = useState<any | null>(null);
+  const [filteredData, setFilteredData] = useState<any[]>([]);
+  const [searchText, setSearchText] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const responseData = await filmApi('trending/all/day?language=en-US');
-        setData(responseData);
+        console.log('API Response:', responseData);
+        setData(responseData.results);
+        setFilteredData(responseData.results);
       } catch (error) {
         console.error(error);
       }
@@ -19,11 +23,29 @@ export default function HomeScreen() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      const filtered = data.filter((item: any) =>
+        item.title && item.title.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setFilteredData(filtered);
+    }
+  }, [searchText, data]);
+
   return (
     <View style={styles.container}>
-      {data ? (
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search by title..."
+          placeholderTextColor="#888"
+          value={searchText}
+          onChangeText={setSearchText}
+        />
+      </View>
+      {filteredData.length > 0 ? (
         <FlatList
-          data={data.results}
+          data={filteredData}
           keyExtractor={(item, index) => index.toString()}
           numColumns={2} // Adjust the number of columns to match your design
           renderItem={({ item }) => (
@@ -34,7 +56,7 @@ export default function HomeScreen() {
           contentContainerStyle={styles.flatListContainer}
         />
       ) : (
-        <Text style={styles.loadingText}>Nalagam...</Text>
+        <Text style={styles.loadingText}>No results found</Text>
       )}
     </View>
   );
@@ -43,8 +65,22 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 0,
+    paddingTop: 30,
     paddingHorizontal: 10,
+  },
+  searchContainer: {
+    padding: 10,
+    backgroundColor: '#333', // Dark gray background for search bar
+    borderRadius: 8,
+    marginBottom: 5, // Increased margin for better spacing
+  },
+  searchInput: {
+    height: 40,
+    borderColor: '#666', // Darker border color
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    color: '#fff', // White text color
   },
   flatListContainer: {
     paddingBottom: 30,
@@ -56,5 +92,6 @@ const styles = StyleSheet.create({
   loadingText: {
     textAlign: 'center',
     marginTop: 20,
+    color: '#fff', // White color for loading text
   },
 });

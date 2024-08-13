@@ -1,12 +1,26 @@
-import React from 'react';
-import { View, Text, Modal, StyleSheet, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import { View, Text, Modal, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { db } from '../../config';
 import { ref, set } from "firebase/database";
-import { Firestore } from '@firebase/firestore';
-import firestore from '@react-native-firebase/firestore';
+import { doc, setDoc, Firestore } from '@firebase/firestore';
+import { firestore } from '../../config';
+import Feather from "react-native-vector-icons/Feather";
 
 export default function MovieCardDialog({ visible, onClose, film }: { visible: boolean, onClose: () => void, film: any }) {
+
+
+    const confirmMessage = () => {
+        Alert.alert(
+          "Success",
+          "Movie was successfully added to favorites!",
+          [
+            {
+              
+            },
+            { text: "OK" }
+          ]
+        );
+      };
 
     function getVoteColor(vote: number) {
         if (vote < 5) {
@@ -18,53 +32,58 @@ export default function MovieCardDialog({ visible, onClose, film }: { visible: b
         }
     }
 
-    const handleAddFilm = () => {
-      const filmData = {
-          release_date: film.release_date,
-          adult: film.adult,
-          backdrop_path: film.backdrop_path,
-          id: film.id,
-          media_type: film.media_type,
-          my_comment: "", // Empty comment as requested
-          original_language: film.original_language,
-          original_title: film.original_title,
-          popularity: film.popularity,
-          poster_path: film.poster_path,
-          title: film.title,
-          vote_average: film.vote_average,
-          vote_count: film.vote_count,
-      };
+    const addMovie = async () => {
+        const filmData = {
+            release_date: film.release_date,
+            adult: film.adult,
+            backdrop_path: film.backdrop_path,
+            id: film.id,
+            media_type: film.media_type,
+            my_comment: "", // Empty comment as requested
+            overview: film.overview,
+            original_language: film.original_language,
+            original_title: film.original_title,
+            popularity: film.popularity,
+            poster_path: film.poster_path,
+            title: film.title,
+            vote_average: film.vote_average,
+            vote_count: film.vote_count,
+        };
 
-      set(ref(db, 'movies/' + film.id), filmData)
-            .then(() => {
-                console.log('Film added successfully!');
-                onClose(); // Close the modal after adding
-            })
-            .catch((error) => {
-                console.error('Error adding film: ', error);
-            });
-    };
+        try {
+            // Reference to the document in the 'favoriteMovies' collection
+            const movieRef = doc(firestore, 'favoriteMovies', film.id.toString());
 
-    const addMovie = () => {
-      firestore().collection("favoriteMovies").add({
-        release_date: film.release_date,
-          adult: film.adult,
-          backdrop_path: film.backdrop_path,
-          id: film.id,
-          media_type: film.media_type,
-          my_comment: "", // Empty comment as requested
-          original_language: film.original_language,
-          original_title: film.original_title,
-          popularity: film.popularity,
-          poster_path: film.poster_path,
-          title: film.title,
-          vote_average: film.vote_average,
-          vote_count: film.vote_count,
+            // Add or update the movie document
+            await setDoc(movieRef, filmData);
 
-    })
-
-    
+            console.log('Film successfully added to favorites!');
+            onClose(); // Close the dialog
+            confirmMessage();
+           
+        } catch (error) {
+            console.error('Error adding film to favorites: ', error);
         }
+    }
+
+    const handleAddFilm = () => {
+        const filmData = {
+            release_date: film.release_date,
+            adult: film.adult,
+            backdrop_path: film.backdrop_path,
+            id: film.id,
+            media_type: film.media_type,
+            my_comment: "", // Empty comment as requested
+            original_language: film.original_language,
+            original_title: film.original_title,
+            popularity: film.popularity,
+            poster_path: film.poster_path,
+            title: film.title,
+            vote_average: film.vote_average,
+            vote_count: film.vote_count,
+        };
+    }
+
 
     return (
         <Modal
@@ -79,7 +98,7 @@ export default function MovieCardDialog({ visible, onClose, film }: { visible: b
                     <Text style={[styles.vote, { backgroundColor: getVoteColor(film.vote_average) }]}>
                         {Math.round(film.vote_average)}/10
                     </Text>
-                    <Text style={styles.voteCount}>Število ocen: {film.vote_count}</Text>
+                    <Text style={styles.voteCount}>Number of ratings: {film.vote_count}</Text>
                     <Text style={styles.overview}>{film.overview}</Text>
                     <View style={styles.infoContainer}>
                         <View style={styles.infoItem}>
@@ -91,13 +110,22 @@ export default function MovieCardDialog({ visible, onClose, film }: { visible: b
                             <Text style={styles.infoText}>{film.original_language}</Text>
                         </View>
                     </View>
-                    <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                        <Text style={styles.closeButtonText}>Close</Text>
-                    </TouchableOpacity>
 
-                    <TouchableOpacity onPress={addMovie} style={styles.closeButton}>
-                        <Text style={styles.closeButtonText}>Add</Text>
-                    </TouchableOpacity>
+                    <View style={styles.infoContainer}>
+                        <View style={styles.infoItem}>
+                            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+                                <Text style={styles.closeButtonText}>Close</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity onPress={addMovie} style={styles.closeButton}>
+                            <Feather
+                                name="heart"
+                                color={'#FFF'}
+
+                            />
+                        </TouchableOpacity>
+                    </View>
+
                 </View>
             </View>
         </Modal>
