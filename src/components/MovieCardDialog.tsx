@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { ref, set } from "firebase/database";
 import { doc, setDoc, Firestore } from '@firebase/firestore';
 import { firestore } from '../../config';
 import Feather from "react-native-vector-icons/Feather";
@@ -14,9 +13,6 @@ export default function MovieCardDialog({ visible, onClose, film }: { visible: b
           "Success",
           "Movie was successfully added to favorites!",
           [
-            {
-              
-            },
             { text: "OK" }
           ]
         );

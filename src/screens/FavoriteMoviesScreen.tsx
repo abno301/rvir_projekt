@@ -1,23 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { View, Text, FlatList, StyleSheet, TextInput } from 'react-native';
 import { useFavoriteMoviesFirestore } from '../hooks/useFavoriteMoviesFirestore';
 import FilmCardFavorites from '../components/MovieCardFavorites';
+import {useFocusEffect} from "@react-navigation/native";
 
 export default function FavoriteMoviesScreen() {
   const [data, setData] = useState<any[]>([]);
   const [filteredData, setFilteredData] = useState<any[]>([]);
   const [searchText, setSearchText] = useState<string>('');
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const fetchedMovies = await useFavoriteMoviesFirestore();
-      console.log('Fetched movies:', fetchedMovies);
-      setData(fetchedMovies);
-      setFilteredData(fetchedMovies);
-    };
+  const fetchMovies = async () => {
+    try {
+      const fetchedMovies = await useFavoriteMoviesFirestore(); // Call the async function
+      // console.log('Fetched movies:', fetchedMovies);
+      console.log("fetchMovies called.")
+      setData(fetchedMovies); // Set the data state with fetched movies
+      setFilteredData(fetchedMovies); // Initially set filtered data to all fetched movies
+    } catch (error) {
+      console.error('Error fetching favorite movies:', error);
+    }
+  };
 
-    fetchMovies();
-  }, []);
+  useFocusEffect(
+      useCallback(() => {
+        fetchMovies();
+      }, []) // Empty dependency array ensures it runs every time the screen is focused
+  );
 
   useEffect(() => {
     if (data) {
@@ -46,7 +54,7 @@ export default function FavoriteMoviesScreen() {
           numColumns={2} // Adjust the number of columns to match your design
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
-              <FilmCardFavorites film={item} />
+              <FilmCardFavorites film={item} refreshFavMovies={fetchMovies} />
             </View>
           )}
           contentContainerStyle={styles.flatListContainer}

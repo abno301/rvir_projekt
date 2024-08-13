@@ -12,7 +12,7 @@ export default function HomeScreen() {
     const fetchData = async () => {
       try {
         const responseData = await filmApi('trending/all/day?language=en-US');
-        console.log('API Response:', responseData);
+        // console.log('API Response:', responseData);
         setData(responseData.results);
         setFilteredData(responseData.results);
       } catch (error) {

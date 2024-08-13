@@ -15,7 +15,7 @@ export const useFavoriteMoviesFirestore = async () => {
         ...doc.data()
       }));
   
-      console.log('Fetched favorite movies:', movies);
+      // console.log('Fetched favorite movies:', movies);
       return movies;
     } catch (error) {
       console.error('Error fetching favorite movies: ', error);

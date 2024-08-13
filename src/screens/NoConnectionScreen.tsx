@@ -24,16 +24,18 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     marginBottom: 20,
+    color: '#ffffff', // Ensure the text is white or a color that contrasts with the background
   },
   button: {
     backgroundColor: '#990008',
     paddingVertical: 10,
     borderRadius: 5,
+    paddingHorizontal: 20,
     alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 30,
     fontWeight: 'bold',
   },
 });

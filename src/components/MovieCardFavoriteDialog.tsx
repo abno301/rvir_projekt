@@ -5,7 +5,7 @@ import { doc, deleteDoc } from '@firebase/firestore';
 import { firestore } from '../../config';
 import Feather from "react-native-vector-icons/Feather";
 
-export default function MovieCardFavoriteDialog({ visible, onClose, film }: { visible: boolean, onClose: () => void, film: any }) {
+export default function MovieCardFavoriteDialog({ visible, onClose, film, refreshFavMovies }: { visible: boolean, onClose: () => void, film: any, refreshFavMovies: any }) {
 
     const confirmMessage = () => {
         Alert.alert(
@@ -37,6 +37,9 @@ export default function MovieCardFavoriteDialog({ visible, onClose, film }: { vi
 
             console.log('Film successfully deleted from favorites!');
             onClose(); // Close the dialog
+            if (refreshFavMovies) {
+                refreshFavMovies();
+            }
             confirmMessage();
         } catch (error) {
             console.error('Error deleting film from favorites: ', error);

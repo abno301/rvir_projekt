@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import MovieCardDialog from './MovieCardDialog';
 import MovieCardFavoriteDialog from './MovieCardFavoriteDialog';
 
-export default function FilmCard({ film }: { film: any }) {
+export default function MovieCardFavorites({ film, refreshFavMovies }: { film: any, refreshFavMovies: any }) {
 
   const [dialogVisible, setDialogVisible] = useState(false);
   // Function to handle the favorite icon press
@@ -67,6 +67,7 @@ export default function FilmCard({ film }: { film: any }) {
         visible={dialogVisible}
         onClose={closeDialog}
         film={film}
+        refreshFavMovies={refreshFavMovies}
       />
 
     </>
