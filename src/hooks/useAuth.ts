@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { getAuth, onAuthStateChanged, User, signOut } from "firebase/auth";
+import { auth } from "../../config";
 
-const auth = getAuth();
+//const auth = getAuth();
 
 export function useAuth() {
   const [user, setUser] = React.useState<User>();
@@ -21,7 +22,16 @@ export function useAuth() {
     return unsubscribeFromAuthStateChanged;
   }, []);
 
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
+
   return {
     user,
+    logout
   };
 }
