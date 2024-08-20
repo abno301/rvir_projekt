@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     marginBottom: 20,
-    color: '#ffffff', // Ensure the text is white or a color that contrasts with the background
+    color: '#ffffff',
   },
   button: {
     backgroundColor: '#990008',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -52,6 +52,7 @@ function RegisterScreen({ navigation }: StackScreenProps<any>) {
         style={styles.input}
         placeholder="Email"
         value={value.email}
+        placeholderTextColor="white"
         onChangeText={(text) => setValue({ ...value, email: text })}
       />
 
@@ -60,6 +61,7 @@ function RegisterScreen({ navigation }: StackScreenProps<any>) {
           style={styles.input}
           placeholder="Password"
           value={value.password}
+          placeholderTextColor="white"
           onChangeText={(text) => setValue({ ...value, password: text })}
           secureTextEntry={!passwordVisible}
         />
@@ -80,6 +82,7 @@ function RegisterScreen({ navigation }: StackScreenProps<any>) {
           style={styles.input}
           placeholder="Confirm Password"
           value={value.confirmPassword}
+          placeholderTextColor="white"
           onChangeText={(text) => setValue({ ...value, confirmPassword: text })}
           secureTextEntry={!confirmPasswordVisible}
         />

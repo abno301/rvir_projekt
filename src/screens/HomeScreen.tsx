@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
-import FilmCard from '../components/MovieCard'; // Assuming you have a FilmCard component similar to FilmKartica
+import FilmCard from '../components/MovieCard';
 import { filmApi } from '../hooks/useApiCall';
 
 export default function HomeScreen() {
@@ -47,7 +47,7 @@ export default function HomeScreen() {
         <FlatList
           data={filteredData}
           keyExtractor={(item, index) => index.toString()}
-          numColumns={2} // Adjust the number of columns to match your design
+          numColumns={2}
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
               <FilmCard film={item} />
@@ -70,17 +70,18 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     padding: 10,
-    backgroundColor: '#333', // Dark gray background for search bar
+    backgroundColor: '#333',
     borderRadius: 8,
-    marginBottom: 5, // Increased margin for better spacing
+    marginBottom: 5,
+    marginTop: 8
   },
   searchInput: {
     height: 40,
-    borderColor: '#666', // Darker border color
+    borderColor: '#666',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
-    color: '#fff', // White text color
+    color: '#fff',
   },
   flatListContainer: {
     paddingBottom: 30,
@@ -92,6 +93,6 @@ const styles = StyleSheet.create({
   loadingText: {
     textAlign: 'center',
     marginTop: 20,
-    color: '#fff', // White color for loading text
+    color: '#fff',
   },
 });

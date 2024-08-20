@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { doc, setDoc, Firestore } from '@firebase/firestore';
+import { doc, setDoc } from '@firebase/firestore';
 import { firestore } from '../../config';
 import Feather from "react-native-vector-icons/Feather";
 
@@ -60,24 +60,6 @@ export default function MovieCardDialog({ visible, onClose, film }: { visible: b
         } catch (error) {
             console.error('Error adding film to favorites: ', error);
         }
-    }
-
-    const handleAddFilm = () => {
-        const filmData = {
-            release_date: film.release_date,
-            adult: film.adult,
-            backdrop_path: film.backdrop_path,
-            id: film.id,
-            media_type: film.media_type,
-            my_comment: "", // Empty comment as requested
-            original_language: film.original_language,
-            original_title: film.original_title,
-            popularity: film.popularity,
-            poster_path: film.poster_path,
-            title: film.title,
-            vote_average: film.vote_average,
-            vote_count: film.vote_count,
-        };
     }
 
 

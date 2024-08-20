@@ -24,7 +24,7 @@ export default function FavoriteMoviesScreen() {
   useFocusEffect(
       useCallback(() => {
         fetchMovies();
-      }, []) // Empty dependency array ensures it runs every time the screen is focused
+      }, [])
   );
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function FavoriteMoviesScreen() {
         <FlatList
           data={filteredData}
           keyExtractor={(item, index) => index.toString()}
-          numColumns={2} // Adjust the number of columns to match your design
+          numColumns={2}
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
               <FilmCardFavorites film={item} refreshFavMovies={fetchMovies} />
@@ -71,21 +71,21 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 30,
     paddingHorizontal: 10,
-     // Black background for the screen
   },
   searchContainer: {
     padding: 10,
-    backgroundColor: '#333', // Dark gray background for search bar
+    backgroundColor: '#333',
     borderRadius: 8,
     marginBottom: 5,
+    marginTop: 8
   },
   searchInput: {
     height: 40,
-    borderColor: '#666', // Darker border color
+    borderColor: '#666',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
-    color: '#fff', // White text color
+    color: '#fff',
   },
   flatListContainer: {
     paddingBottom: 30,
@@ -97,6 +97,6 @@ const styles = StyleSheet.create({
   loadingText: {
     textAlign: 'center',
     marginTop: 20,
-    color: '#fff', // White color for loading text
+    color: '#fff',
   },
 });
